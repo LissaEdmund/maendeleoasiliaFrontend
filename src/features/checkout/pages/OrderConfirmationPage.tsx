@@ -1,0 +1,2 @@
+import { useCheckoutStore } from '../store/checkoutStore'
+export function OrderConfirmationPage() { const customer = useCheckoutStore((state) => state.customer); return <section className="checkout-page"><p className="eyebrow">Step 3 of 3</p><h1>Order confirmation</h1><p>{customer?.type === 'b2b' ? 'Your business invoice will appear here.' : 'Your payment receipt will appear here.'}</p></section> }
