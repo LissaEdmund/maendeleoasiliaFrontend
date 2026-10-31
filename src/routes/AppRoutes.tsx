@@ -1,32 +1,45 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout } from '../layouts/MainLayout'
 import { CheckoutLayout } from '../layouts/CheckoutLayout'
 import { HomePage } from '../pages/home/HomePage'
-import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { HubsPage } from '../pages/hubs/HubsPage'
+import { HubDetailsPage } from '../pages/hubs/HubDetailsPage'
+import { JobsPage } from '../pages/jobs/JobsPage'
+import { JobDetailsPage } from '../pages/jobs/JobDetailsPage'
+import { JobApplicationPage } from '../pages/jobs/JobApplicationPage'
+import { ContactsPage } from '../pages/contacts/ContactsPage'
+import { ProductsPage } from '../features/catalog/pages/ProductsPage'
+import { ProductDetailsPage } from '../features/catalog/pages/ProductDetailsPage'
+import { CartPage } from '../features/cart/pages/CartPage'
 import { CustomerDetailsPage } from '../features/checkout/pages/CustomerDetailsPage'
 import { PaymentPage } from '../features/checkout/pages/PaymentPage'
 import { OrderConfirmationPage } from '../features/checkout/pages/OrderConfirmationPage'
+import { routePaths } from './routePaths'
+import { PlaceholderPage } from '../pages/PlaceholderPage'
 
 export function AppRoutes() {
-  return <BrowserRouter><Routes>
-    <Route element={<MainLayout />}>
-      <Route index element={<HomePage />} />
-      <Route path="products" element={<PlaceholderPage title="Products" />} />
-      <Route path="products/:slug" element={<PlaceholderPage title="Product details" />} />
-      <Route path="cart" element={<PlaceholderPage title="Shopping cart" />} />
-      <Route path="hubs" element={<PlaceholderPage title="Hubs" />} />
-      <Route path="hubs/:slug" element={<PlaceholderPage title="Hub details" />} />
-      <Route path="jobs" element={<PlaceholderPage title="Jobs" />} />
-      <Route path="jobs/:id" element={<PlaceholderPage title="Job details" />} />
-      <Route path="jobs/:id/apply" element={<PlaceholderPage title="Apply for a job" />} />
-      <Route path="contacts" element={<PlaceholderPage title="Contacts" />} />
-    </Route>
-    <Route path="checkout" element={<CheckoutLayout />}>
-      <Route index element={<Navigate to="customer-details" replace />} />
-      <Route path="customer-details" element={<CustomerDetailsPage />} />
-      <Route path="payment" element={<PaymentPage />} />
-      <Route path="confirmation" element={<OrderConfirmationPage />} />
-    </Route>
-    <Route path="*" element={<PlaceholderPage title="Page not found" />} />
-  </Routes></BrowserRouter>
+  return (
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path={routePaths.home} element={<HomePage />} />
+        <Route path={routePaths.products} element={<ProductsPage />} />
+        <Route path={routePaths.product} element={<ProductDetailsPage />} />
+        <Route path={routePaths.cart} element={<CartPage />} />
+        <Route path={routePaths.hubs} element={<HubsPage />} />
+        <Route path={routePaths.hub} element={<HubDetailsPage />} />
+        <Route path={routePaths.jobs} element={<JobsPage />} />
+        <Route path={routePaths.job} element={<JobDetailsPage />} />
+        <Route path={routePaths.apply} element={<JobApplicationPage />} />
+        <Route path={routePaths.contacts} element={<ContactsPage />} />
+        <Route path="*" element={<PlaceholderPage title="Page not found" />} />
+      </Route>
+
+      <Route path={routePaths.checkout} element={<CheckoutLayout />}>
+        <Route index element={<Navigate to="customer-details" replace />} />
+        <Route path="customer-details" element={<CustomerDetailsPage />} />
+        <Route path="payment" element={<PaymentPage />} />
+        <Route path="confirmation" element={<OrderConfirmationPage />} />
+      </Route>
+    </Routes>
+  )
 }

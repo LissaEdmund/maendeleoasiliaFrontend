@@ -3,7 +3,7 @@ import { B2CDetailsForm } from '../components/b2c/B2CDetailsForm'
 import { B2BDetailsForm } from '../components/b2b/B2BDetailsForm'
 import { CustomerTypeToggle } from '../components/CustomerTypeToggle'
 import { useCheckoutStore } from '../store/checkoutStore'
-import type { B2CCustomerDetails } from '../../../types/checkout'
+import type { B2CCustomerDetails } from '../types/checkout'
 export function CustomerDetailsPage() {
   const { customerType, setCustomerType, setCustomer } = useCheckoutStore(); const navigate = useNavigate()
   const continueAsB2C = (details: B2CCustomerDetails) => { setCustomer({ type: 'b2c', details }); navigate('/checkout/payment') }

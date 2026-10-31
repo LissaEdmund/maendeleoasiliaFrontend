@@ -2,76 +2,97 @@
 
 ## System boundary
 
-This repository is the customer-facing React frontend. It is built with Vite and TypeScript and is intended to communicate with a separate Next.js backend through REST APIs. API requests are centralized in `src/services/api/axios.ts`; the base URL is read from `VITE_API_BASE_URL` and defaults to `http://localhost:3000/api` for local development. No backend or database is part of this repository.
+This repository contains the customer-facing React frontend, built with Vite and TypeScript. It communicates with a separate Next.js backend through REST APIs. Requests use the shared Axios client in `src/services/api/axios.ts`; `VITE_API_BASE_URL` configures the backend and defaults to `http://localhost:3000/api`. No backend or database is part of this repository.
 
-## Runtime flow
+## Runtime and routing
 
-`src/main.tsx` loads shared CSS and mounts `App`. `src/App.tsx` provides the TanStack Query client for server state. `src/routes/AppRoutes.tsx` owns route composition and selects the appropriate layout. Main website routes render inside `MainLayout`; checkout routes render inside the simplified `CheckoutLayout`.
+`src/main.tsx` loads the reset, variables, and global styles, then mounts `App` inside React `StrictMode` and the single `BrowserRouter`. `src/App.tsx` provides TanStack Query for server state. `src/routes/AppRoutes.tsx` declares the route tree without creating another router. Public website routes use `MainLayout`, which composes the reusable `Header`, `Footer`, and an `Outlet`. `Header` composes the shared `Navbar` and an accessible cart icon link. Checkout routes use the simplified `CheckoutLayout` with its own header and `Outlet`, without the main website navigation or customer type toggle.
 
-## Route map
-
-| Route | Layout | Current page |
+| Route | Layout | Page owner |
 | --- | --- | --- |
-| `/` | Main | Home |
-| `/products`, `/products/:slug` | Main | Product placeholders |
-| `/cart` | Main | Cart placeholder |
-| `/hubs`, `/hubs/:slug` | Main | Hub placeholders |
-| `/jobs`, `/jobs/:id`, `/jobs/:id/apply` | Main | Job placeholders |
-| `/contacts` | Main | Contacts placeholder |
-| `/checkout/customer-details` | Checkout | B2C/B2B customer details |
-| `/checkout/payment` | Checkout | Payment methods placeholder |
-| `/checkout/confirmation` | Checkout | Receipt/invoice placeholder |
+| `/` | Main | `pages/home` |
+| `/products`, `/products/:slug` | Main | `features/catalog/pages` |
+| `/cart` | Main | `features/cart/pages` |
+| `/hubs`, `/hubs/:slug` | Main | `pages/hubs` |
+| `/jobs`, `/jobs/:id`, `/jobs/:id/apply` | Main | `pages/jobs` |
+| `/contacts` | Main | `pages/contacts` |
+| `/checkout/customer-details`, `/checkout/payment`, `/checkout/confirmation` | Checkout | `features/checkout/pages` |
 
-`MainLayout` shares the site header and footer, including a cart link. Checkout keeps a focused header without the main site navigation. `src/routes/routePaths.ts` centralizes route path constants for subsequent navigation work.
+`src/routes/routePaths.ts` centralizes route patterns. `ProtectedRoute` accepts authentication state and a redirect path for future account-only routes; none of the listed public storefront or checkout routes is currently guarded.
 
-## State and data
+## State, forms, and API boundaries
 
-- **Server state:** TanStack Query is provided at the application root. Feature hooks should own queries/mutations and call service functions.
-- **Client state:** Zustand is used for cross-route checkout selection/details. Existing cart/auth/UI stores are reserved for client-side state; they are not yet functional implementations.
-- **Forms:** React Hook Form handles form state. Zod schemas are separate for B2C and B2B and are connected through `@hookform/resolvers`.
-- **HTTP:** Feature service modules should use the shared Axios instance. UI components should not issue direct network requests.
+- TanStack Query is for remote/server state. Feature hooks own queries and mutations and call service modules.
+- Zustand is for shared client-side state. Checkout state lives in the checkout feature; cart state belongs to the cart feature. Shared auth/UI stores remain under `src/store` until those domains are moved into dedicated features.
+- React Hook Form manages form state. Independent B2C and B2B Zod schemas live under `features/checkout/schemas` and use `@hookform/resolvers`.
+- UI components do not make direct network requests. Feature service modules use the shared Axios instance.
 
-## Checkout boundary and flow
+## Feature boundaries
 
-The checkout flow is Catalogue → Cart → Customer Details → Payment → Order Confirmation. The customer details page presents the B2C/B2B toggle first and mounts only the selected customer experience. B2C currently captures full name, phone, and delivery location. B2B has an account details placeholder and an independent schema ready for account data; checkout does not ask the customer to re-enter registration details. Business sign-in/profile integration is not connected, so the B2B continue action is disabled until registered details can be loaded. B2C customer type/details are stored in `features/checkout/store/checkoutStore.ts` for later steps. Payment methods are reserved for mobile payment, card, and till. Confirmation is designed to present a B2C receipt or B2B invoice. Payment, account loading, geolocation/geocoding, and document generation require future API and feature work.
+- **Catalog:** product and category pages, hooks, API services, and product/category types.
+- **Cart:** cart page, hook, service, Zustand store, and cart types.
+- **Checkout:** customer details, payment and confirmation pages; B2C/B2B forms; independent schemas; checkout store and types. The customer type toggle appears only on customer details. B2C currently captures name, phone, and delivery location. B2B account loading is a placeholder and does not request duplicate registration data; its continue action stays disabled until the registered business profile is connected. Mobile, card, and till payments and B2C receipt/B2B invoice outputs are future integrations.
+- **Orders:** order pages, services, and types.
+- **Website pages:** home, hubs, jobs, and contacts live under `src/pages`.
 
-## Source tree
+## Current folder structure
 
 ```text
-src/
-├── assets/                 # Static image, icon, and logo assets
-├── components/             # Shared common and layout components
-├── config/                 # Environment and app configuration
-├── constants/              # Shared constants and route/API values
-├── features/
-│   └── checkout/
-│       ├── components/     # Customer type, B2C, B2B, payment, confirmation UI
-│       ├── hooks/           # Checkout-specific hooks (future)
-│       ├── pages/           # Customer details, payment, confirmation
-│       ├── schemas/         # Independent B2C and B2B Zod validation
-│       ├── services/        # Checkout API operations (future)
-│       ├── store/           # Checkout client state
-│       └── types/           # Feature-local types (shared checkout types currently in src/types)
-├── hooks/                  # Cross-feature hooks
-├── layouts/                # Main and checkout shells
-├── pages/                  # Main website pages and placeholders
-├── routes/                 # Route table and route constants
-├── services/               # API client and feature service modules
-├── store/                  # Shared client-side Zustand stores
-├── styles/                 # Reset, design variables, global styles
-├── types/                  # Shared TypeScript domain types
-└── utils/                  # Pure formatting, validation, and storage helpers
+frontend/
+├── public/
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   ├── icons/
+│   │   └── logos/
+│   ├── components/
+│   │   ├── shared/
+│   │   │   ├── Button/ Input/ Select/ SearchInput/ FilterBar/
+│   │   │   ├── DataTable/ Pagination/ Modal/ Badge/ Tabs/ Dropdown/
+│   │   │   └── DatePicker/ FileUpload/ EmptyState/ Loader/
+│   │   └── layout/
+│   │       └── Header/ Footer/ Navbar/ Container/
+│   ├── layouts/
+│   │   ├── MainLayout.tsx
+│   │   ├── CheckoutLayout.tsx
+│   │   └── AuthLayout.tsx (reserved)
+│   ├── pages/
+│   │   ├── home/HomePage.tsx
+│   │   ├── hubs/{HubsPage,HubDetailsPage}.tsx
+│   │   ├── jobs/{JobsPage,JobDetailsPage,JobApplicationPage}.tsx
+│   │   └── contacts/ContactsPage.tsx
+│   ├── features/
+│   │   ├── catalog/{pages,components,services,hooks,types}/
+│   │   ├── cart/{pages,components,store,services,hooks,types}/
+│   │   ├── checkout/
+│   │   │   ├── pages/ components/b2c/ components/b2b/
+│   │   │   ├── components/payment/ components/confirmation/
+│   │   │   └── schemas/ services/ hooks/ store/ types/
+│   │   └── orders/{pages,components,services,types}/
+│   ├── routes/{AppRoutes.tsx,ProtectedRoute.tsx,routePaths.ts}
+│   ├── services/api/axios.ts
+│   ├── hooks/ types/ utils/ constants/ config/
+│   ├── store/                 # Shared auth/UI state
+│   ├── styles/{globals.css,variables.css,reset.css}
+│   ├── App.tsx
+│   └── main.tsx
+├── .env
+├── .env.example
+├── package.json
+└── vite.config.ts
 ```
+
+Shared component and asset folders are scaffold slots; the reusable controls listed there are not implemented yet. `.gitkeep` markers preserve empty folders in version control. Authentication and account pages/services remain in their existing global folders because the requested tree does not assign them to a feature. Most legacy auth/account modules are empty placeholders.
 
 ## Conventions
 
 - Use TypeScript and functional React components.
-- Keep page composition, reusable components, domain logic, schemas, state, and API calls in their appropriate layers.
-- Use TanStack Query for remote/server state and Zustand for local shared state.
-- Keep B2C and B2B validation and presentation independent; do not put the customer-type toggle on later checkout pages.
-- Use relative imports until a path alias is deliberately configured.
-- Avoid adding dependencies when existing packages cover the need.
+- Keep feature-specific pages, components, hooks, services, state, and types inside their feature boundary. Keep global site sections under `src/pages` and genuinely shared UI under `src/components`.
+- Use TanStack Query for server state and Zustand for client state.
+- Keep B2C and B2B presentation and validation independent; do not repeat the customer type toggle on payment or confirmation pages.
+- Use relative imports until a path alias is configured.
+- Prefer existing dependencies over adding new ones.
 
-## Existing and planned modules
+## Implementation status
 
-Product, category, cart, order, payment, authentication, and account service/page files existed before this architecture setup. Their presence does not imply the corresponding features are implemented. Additional required folders for assets and feature-specific hooks/services/components can be populated as the associated features are built; empty directory placeholders are not tracked by Git.
+The route/layout structure, main navigation, checkout type toggle, B2C form/schema, B2B account placeholder, checkout client state, and centralized API client are present. Catalog, cart, orders, hubs, jobs, and contacts are architecture placeholders. Location detection/geocoding, business authentication/profile loading, cart/order data, payment processing, receipt/invoice generation, and backend integration remain future work.
