@@ -9,11 +9,20 @@ const navigationItems = [
   { label: 'Contacts', to: routePaths.contacts },
 ] as const
 
-export function Navbar() {
+type NavbarProps = {
+  isOpen: boolean
+  onNavigate: () => void
+}
+
+export function Navbar({ isOpen, onNavigate }: NavbarProps) {
   return (
-    <nav aria-label="Main navigation">
+    <nav
+      id="main-navigation"
+      className={`primary-nav${isOpen ? ' is-open' : ''}`}
+      aria-label="Main navigation"
+    >
       {navigationItems.map(({ label, to, ...linkProps }) => (
-        <NavLink key={to} to={to} {...linkProps}>
+        <NavLink key={to} to={to} {...linkProps} onClick={onNavigate}>
           {label}
         </NavLink>
       ))}

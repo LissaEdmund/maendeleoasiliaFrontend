@@ -1,1 +1,12 @@
-:root { color-scheme: light; --green-900: #173b2d; --green-700: #286044; --green-100: #eaf2eb; --cream: #f8f7f2; --ink: #202a24; --muted: #69736c; --line: #dfe5df; --white: #fff; }
+:root {
+  color-scheme: light;
+  --green-900: #304b19;
+  --green-700: #416422;
+  --green-100: #eef3e8;
+  --cream: #f5f5f5;
+  --ink: #1a1a1a;
+  --muted: #666;
+  --line: #e5e5e5;
+  --white: #fff;
+  --font-sans: Inter, "Segoe UI", sans-serif;
+}

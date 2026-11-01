@@ -1,10 +1,20 @@
 body { background: var(--cream); color: var(--ink); line-height: 1.55; }
 a { text-decoration: none; }
-.site-header, .checkout-header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 6vw, 88px); background: var(--white); border-bottom: 1px solid var(--line); }
-.brand { font-size: 18px; font-weight: 800; color: var(--green-900); white-space: nowrap; }.brand span { color: var(--green-700); }
-nav { display: flex; gap: clamp(14px, 2vw, 30px); } nav a { color: var(--muted); font-size: 14px; } nav a.active, nav a:hover { color: var(--green-700); }
-.cart-link { color: var(--green-900); font-weight: 700; }
-.cart-link svg { display: block; }.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.site-header { min-height: 80px; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(16px, 2.4vw, 36px); padding: 0 clamp(20px, 6vw, 88px); background: var(--white); border-bottom: 1px solid var(--line); }
+.checkout-header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 6vw, 88px); background: var(--white); border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--green-900); white-space: nowrap; }
+.brand-logo { display: block; width: 44px; height: 44px; object-fit: contain; }
+.brand-name { font-size: 18px; font-weight: 700; letter-spacing: -.025em; }
+.brand-name span { color: var(--green-700); }
+.primary-nav { display: flex; align-items: center; justify-content: center; gap: clamp(4px, .7vw, 12px); }
+.primary-nav a { display: inline-flex; min-height: 44px; align-items: center; padding: 0 clamp(10px, 1.15vw, 16px); border-radius: 999px; color: var(--muted); font-size: 14px; font-weight: 500; transition: background-color 140ms ease, color 140ms ease; }
+.primary-nav a[aria-current="page"], .primary-nav a:hover { background: var(--green-100); color: var(--green-900); }
+.cart-link { justify-self: end; display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--green-900); font-size: 14px; font-weight: 600; transition: background-color 140ms ease, border-color 140ms ease; }
+.cart-link:hover { border-color: var(--green-700); background: var(--green-100); }
+.cart-link svg { display: block; }
+.menu-toggle { display: none; }
+.site-header a:focus-visible, .site-header button:focus-visible { outline: 3px solid var(--green-700); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .page-shell { min-height: 58vh; padding: clamp(56px, 10vw, 132px) clamp(24px, 12vw, 180px); }
 .hero { background: radial-gradient(ellipse at 90% 20%, #e3eedf 0, transparent 44%), var(--cream); }.hero h1 { max-width: 780px; margin: 12px 0; color: var(--green-900); font-size: clamp(42px, 7vw, 78px); line-height: 1.04; letter-spacing: -.05em; }.hero p:not(.eyebrow) { max-width: 560px; color: var(--muted); font-size: 18px; margin-bottom: 30px; }
 .eyebrow { color: var(--green-700); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
@@ -14,4 +24,27 @@ nav { display: flex; gap: clamp(14px, 2vw, 30px); } nav a { color: var(--muted);
 .customer-toggle { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; margin-bottom: 24px; background: var(--cream); border-radius: 8px; }.customer-toggle button { border: 0; padding: 12px 8px; background: transparent; color: var(--muted); cursor: pointer; border-radius: 6px; }.customer-toggle button.selected { color: var(--green-900); background: var(--white); box-shadow: 0 1px 4px #173b2d19; font-weight: 700; }
 .form-stack { display: grid; gap: 16px; }.form-stack label { display: grid; gap: 6px; font-size: 14px; font-weight: 650; }.form-stack input { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 11px; color: var(--ink); background: var(--white); }.form-stack input:focus { outline: 2px solid #28604444; border-color: var(--green-700); }.form-stack small { color: #a03530; font-weight: 400; }
 .account-placeholder { padding: 20px; border: 1px dashed var(--line); border-radius: 8px; }.account-placeholder h2 { margin-top: 0; color: var(--green-900); font-size: 18px; }.account-placeholder p { color: var(--muted); }.account-placeholder button:disabled { background: #9aa79e; cursor: not-allowed; }
-@media (max-width: 700px) { .site-header { flex-wrap: wrap; padding-block: 16px; } nav { order: 3; width: 100%; overflow-x: auto; justify-content: space-between; } .checkout-header { gap: 12px; padding-inline: 16px; font-size: 13px; }.checkout-page { margin: 32px auto; padding: 24px; } }
+@media (max-width: 860px) {
+  .site-header { grid-template-columns: minmax(0, 1fr) auto auto; padding-block: 12px; gap: 12px; }
+  .menu-toggle { display: grid; width: 44px; height: 44px; place-content: center; gap: 5px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--white); color: var(--green-900); cursor: pointer; }
+  .menu-toggle span { display: block; width: 18px; height: 2px; border-radius: 2px; background: currentColor; transition: transform 140ms ease, opacity 140ms ease; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .primary-nav { display: none; grid-column: 1 / -1; align-items: stretch; gap: 4px; padding: 8px 0 4px; border-top: 1px solid var(--line); }
+  .primary-nav.is-open { display: grid; }
+  .primary-nav a { min-height: 44px; padding: 0 14px; border-radius: 8px; }
+  .checkout-header { gap: 12px; padding-inline: 16px; font-size: 13px; }
+  .checkout-page { margin: 32px auto; padding: 24px; }
+}
+@media (max-width: 380px) {
+  .site-header { padding-inline: 14px; gap: 8px; }
+  .brand { gap: 6px; }
+  .brand-logo { width: 36px; height: 36px; }
+  .brand-name { font-size: 15px; }
+  .cart-link { width: 44px; padding: 0; }
+  .cart-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primary-nav a, .cart-link, .menu-toggle span { transition: none; }
+}
