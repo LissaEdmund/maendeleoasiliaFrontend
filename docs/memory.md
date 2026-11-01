@@ -28,3 +28,11 @@
 - Extracted reusable `Header`, `Navbar`, and `Footer` components under `src/components/layout`. The shared header includes all five primary links and an accessible cart icon link; `MainLayout` renders Header, Outlet, and Footer.
 - Kept `CheckoutLayout` simplified with its own header and Outlet. The B2C/B2B toggle remains exclusive to customer details. Added a reusable `ProtectedRoute` guard that accepts authentication state and redirects when unauthenticated.
 - Verification: `npm.cmd run build` and `npm.cmd run lint` passed. A temporary SSR route smoke check rendered all 13 requested paths and confirmed main header/footer versus checkout layout, plus no customer toggle on payment/confirmation. No permanent test file was added.
+
+## 2026-11-01 — Footer contact details and utility links
+
+- Updated the shared footer with the company location, phone number, and email from the supplied reference image. Phone and email are actionable `tel:` and `mailto:` links; contact icons use Lucide React per `docs/DESIGN.md`.
+- Set the footer logo tile background to white and replaced the former bottom-row contact link with Privacy Policy, Terms & Conditions, and Admin Login links.
+- Added `/privacy-policy`, `/terms-and-conditions`, and `/admin/login` routes using the existing placeholder page because policy copy and an admin authentication flow are not implemented.
+- Changed the “Tanzania agro-industrial ecosystem” brand subtitle and “Regional hubs” heading to the design system secondary green (`#416422`, `var(--green-700)`).
+- Changed the shared footer background to black (`#000`).

@@ -31,6 +31,9 @@ export function AppRoutes() {
         <Route path={routePaths.job} element={<JobDetailsPage />} />
         <Route path={routePaths.apply} element={<JobApplicationPage />} />
         <Route path={routePaths.contacts} element={<ContactsPage />} />
+        <Route path={routePaths.privacyPolicy} element={<PlaceholderPage title="Privacy Policy" />} />
+        <Route path={routePaths.termsAndConditions} element={<PlaceholderPage title="Terms & Conditions" />} />
+        <Route path={routePaths.adminLogin} element={<PlaceholderPage title="Admin Login" />} />
         <Route path="*" element={<PlaceholderPage title="Page not found" />} />
       </Route>
 
