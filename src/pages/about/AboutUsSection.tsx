@@ -28,7 +28,7 @@ export function AboutUsSection({ headingLevel = 'h2', asPage = false }: AboutUsS
           <p>
             Maendeleo Asilia is an impact-driven agro-industrial ecosystem building decentralized,
             region-specific manufacturing hubs across Tanzania. We process locally harvested food
-            and cash crops into high-value finished goods directly at the source—turning rural
+            and cash crops into high-value finished goods directly at the source turning rural
             communities into thriving industrial engines.
           </p>
           <img
