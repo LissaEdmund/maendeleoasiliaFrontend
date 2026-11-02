@@ -11,6 +11,7 @@ This repository contains the customer-facing React frontend, built with Vite and
 | Route | Layout | Page owner |
 | --- | --- | --- |
 | `/` | Main | `pages/home` |
+| `/about-us` | Main | `pages/about` |
 | `/products`, `/products/:slug` | Main | `features/catalog/pages` |
 | `/cart` | Main | `features/cart/pages` |
 | `/hubs`, `/hubs/:slug` | Main | `pages/hubs` |
@@ -33,7 +34,7 @@ This repository contains the customer-facing React frontend, built with Vite and
 - **Cart:** cart page, hook, service, Zustand store, and cart types.
 - **Checkout:** customer details, payment and confirmation pages; B2C/B2B forms; independent schemas; checkout store and types. The customer type toggle appears only on customer details. B2C currently captures name, phone, and delivery location. B2B account loading is a placeholder and does not request duplicate registration data; its continue action stays disabled until the registered business profile is connected. Mobile, card, and till payments and B2C receipt/B2B invoice outputs are future integrations.
 - **Orders:** order pages, services, and types.
-- **Website pages:** home, hubs, jobs, and contacts live under `src/pages`.
+- **Website pages:** home, About Us, hubs, jobs, and contacts live under `src/pages`. The homepage includes the reusable Who We Are introduction below its hero. `/about-us` composes six focused sections in order: Who We Are, Core Belief, Problem, Value Creation, Vision & Mission, and Impact; the shared main layout renders the footer immediately afterward. About page imagery is centralized in `pages/about/aboutImages.ts` and imported only from `src/assets/images`.
 
 ## Current folder structure
 
@@ -58,6 +59,10 @@ frontend/
 │   │   └── AuthLayout.tsx (reserved)
 │   ├── pages/
 │   │   ├── home/HomePage.tsx
+│   │   ├── about/
+│   │   │   ├── {AboutUsPage,AboutUsSection}.tsx
+│   │   │   ├── aboutImages.ts
+│   │   │   └── components/{CoreBeliefSection,ProblemSection,ValueCreationSection,VisionMissionSection,ImpactSection}.tsx
 │   │   ├── hubs/{HubsPage,HubDetailsPage}.tsx
 │   │   ├── jobs/{JobsPage,JobDetailsPage,JobApplicationPage}.tsx
 │   │   └── contacts/ContactsPage.tsx

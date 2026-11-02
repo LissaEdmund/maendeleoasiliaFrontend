@@ -36,3 +36,21 @@
 - Added `/privacy-policy`, `/terms-and-conditions`, and `/admin/login` routes using the existing placeholder page because policy copy and an admin authentication flow are not implemented.
 - Changed the “Tanzania agro-industrial ecosystem” brand subtitle and “Regional hubs” heading to the design system secondary green (`#416422`, `var(--green-700)`).
 - Changed the shared footer background to black (`#000`).
+
+## 2026-11-02 — About Us section and route
+
+- Added an About Us overview below the home hero and a dedicated `/about-us` page that reuses the same content.
+- Added About Us immediately after Home in the shared navbar, included it in footer quick navigation, and registered its path centrally in `routePaths`.
+- Updated architecture and design documentation for the route, page structure, navigation order, and homepage section. About content stays within the project’s documented focus on processing at source, local production, and rural opportunity.
+- Verification: `npm run build` and `npm run lint` passed. Browser checks confirmed desktop link order, the `/about-us` route, tablet menu navigation/closing, and no horizontal overflow at mobile width.
+- Refined the About Us section to use the Home page canvas, a prominent “Who We Are” heading, smaller supporting subheading, highlighted catchphrase, and centered company narrative above side-by-side Vision and Mission panels on desktop (stacked on mobile).
+
+## 2026-11-02 — Complete About Us page
+
+- Expanded `/about-us` into six ordered, focused sections: Who We Are, Core Belief, Problem, Value Creation, Vision & Mission, and Impact. The page ends after Impact so the shared footer follows directly, with no closing CTA.
+- Kept the Who We Are introduction reusable below the homepage hero. Added dedicated section components under `src/pages/about/components` and centralized image imports/alt text in `aboutImages.ts`.
+- Inspected all local image assets before use. Used `farmers1.png` for the introduction, `farmers2.png` for the problem section, `factory1.jpg` for value creation, and `farmers3.png`, `factory2.png`, `factory3.png`, and `factory4.png` for the four impact items. The value-addition image shows bottled cooking oil on a production line; there is no separate standalone product image in the current assets.
+- Used the existing Lucide React dependency and CSS design tokens; added responsive image/grid layouts and the specified dark gradient Core Belief section.
+- Matched the Value Creation section's horizontal padding to the other sections, adapted the shared footer to two columns at tablet widths, and removed the 320px root minimum so narrow viewports with a classic scrollbar do not gain horizontal overflow.
+- Corrected the architecture tree to list `aboutImages.ts` with its actual extension.
+- Verification: production build and lint passed. Browser checks at 320, 390, 768, 960, 1024, and 1440px found no horizontal overflow; all seven local images decoded successfully, all six sections appeared in order, and the footer followed Impact with no closing CTA. Reload produced no browser console errors.

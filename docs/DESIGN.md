@@ -101,7 +101,7 @@ Use one clear visual focal point for each major section. Reserve the strong bran
 
 ## 7. Navbar design
 
-The shared navbar contains the company logo/name and links for **Home, Products, Hubs, Jobs, Contacts**, plus **shopping cart** and **account/profile** access. Use existing routes or account capabilities when available; this specification does not establish a new account workflow or route. The cart count reflects the current cart state and updates when that state changes; hide the count when it is zero unless an explicit empty-cart design calls for it. Provide an accessible name for icon-only cart/account controls.
+The shared navbar contains the company logo/name and links for **Home, About Us, Products, Hubs, Jobs, Contacts**, plus **shopping cart** and **account/profile** access. About Us follows Home and links to `/about-us`. Use existing routes or account capabilities when available; this specification does not establish a new account workflow or route. The cart count reflects the current cart state and updates when that state changes; hide the count when it is zero unless an explicit empty-cart design calls for it. Provide an accessible name for icon-only cart/account controls.
 
 Use a white background or translucent white (`rgba(255, 255, 255, 0.92)`) with a subtle backdrop blur where supported. The opaque white fallback must retain clear text and separation when `backdrop-filter` is unsupported. Use `#416422` for the active link and restrained hover/focus feedback. Keep the company identity, nav items, cart, and account affordance aligned on desktop.
 
@@ -302,7 +302,8 @@ Use this token foundation as the canonical CSS variable example (extend only wit
 
 | Page | Design direction |
 |---|---|
-| Home | Visual storytelling, company identity, and authentic agricultural/manufacturing imagery. Keep one hero message and one primary next action; follow with clearly chunked company and platform content. |
+| Home | Visual storytelling, company identity, and authentic agricultural/manufacturing imagery. Keep one hero message and one primary next action; follow with the About Us overview using the same `#F5F5F5` page canvas. |
+| About Us | Implement six sections in order: Who We Are, Core Belief, The Problem We Are Solving, How We Create Value, Our Vision & Mission, and Our Impact. Use local agricultural/factory assets only; keep image mappings centralized and provide descriptive alt text. The introduction has a centered title/subtitle and constrained copy with farmer imagery. Give Core Belief a full-width dark teal-to-charcoal gradient, gold label, and centered white statement. Use light-background problem cards and a light-green opportunity panel; show the three value stages in sequence; use balanced editorial Vision/Mission cards; finish with a two-column desktop impact grid. Stack grids responsively, preserve image aspect ratios, and end directly after Impact with the shared site footer—do not add a closing CTA. |
 | Product | E-commerce catalogue with scannable product cards, useful filters, clear price/unit information, product detail hierarchy, and an always-accessible shopping cart. Show loading, empty, and error states distinctly. |
 | Hubs | Regional browsing/filtering when supported by available data, processing-hub cards, location context, and industrial imagery. Keep hub facts easy to compare and avoid adding unsupported claims. |
 | Jobs | Clear job opportunities and farmer partnership application workflows. Distinguish opportunity information from its application action; keep forms accessible and explain field errors beside the relevant input. |
@@ -368,7 +369,7 @@ Target **WCAG 2.2 AA**. Accessibility is part of the component definition, not a
 - [ ] Fitts, Hick, Chunking, Doherty, Proximity, and Von Restorff principles are reflected in real interactions and content hierarchy.
 - [ ] Major sections have one clear focal point; targets are generally at least 44 × 44px.
 - [ ] Content is centered consistently, capped at 1280px, and uses the documented gutters and 4px spacing scale.
-- [ ] Navbar includes company identity, five primary links, cart, and account/profile access where supported; mobile menu is accessible and cart count is state-driven.
+- [ ] Navbar includes company identity, six primary links (Home followed by About Us), cart, and account/profile access where supported; mobile menu is accessible and cart count is state-driven.
 - [ ] Shared components use consistent geometry and include relevant focus, active, disabled, loading, and error behavior.
 - [ ] Forms have persistent labels, clear grouping, inline validation, white form cards, and accessible submission feedback.
 - [ ] B2C and B2B checkout experiences remain separate; only Customer Details presents the customer toggle.
@@ -381,6 +382,7 @@ Target **WCAG 2.2 AA**. Accessibility is part of the component definition, not a
 - [ ] Loading states and immediate interface feedback are present without claiming backend completion times.
 - [ ] Design tokens are centralized and reused; there are no scattered duplicate colour/spacing definitions.
 - [ ] Home, Product, Hubs, Jobs, and Contact pages share the same brand identity while serving their distinct user goals.
+- [ ] About Us contains its six approved sections in order, uses local inspected assets, adapts to mobile, and ends after Impact with the shared footer and no closing CTA.
 
 ## 20. Final design directive
 

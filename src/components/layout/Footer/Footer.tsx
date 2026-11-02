@@ -5,6 +5,7 @@ import { routePaths } from '../../../routes/routePaths'
 
 const quickLinks = [
   { label: 'Home', to: routePaths.home },
+  { label: 'About us', to: routePaths.aboutUs },
   { label: 'Products', to: routePaths.products },
   { label: 'Hubs', to: routePaths.hubs },
   { label: 'Jobs', to: routePaths.jobs },

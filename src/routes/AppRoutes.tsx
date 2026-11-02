@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { MainLayout } from '../layouts/MainLayout'
 import { CheckoutLayout } from '../layouts/CheckoutLayout'
 import { HomePage } from '../pages/home/HomePage'
+import { AboutUsPage } from '../pages/about/AboutUsPage'
 import { HubsPage } from '../pages/hubs/HubsPage'
 import { HubDetailsPage } from '../pages/hubs/HubDetailsPage'
 import { JobsPage } from '../pages/jobs/JobsPage'
@@ -22,6 +23,7 @@ export function AppRoutes() {
     <Routes>
       <Route element={<MainLayout />}>
         <Route path={routePaths.home} element={<HomePage />} />
+        <Route path={routePaths.aboutUs} element={<AboutUsPage />} />
         <Route path={routePaths.products} element={<ProductsPage />} />
         <Route path={routePaths.product} element={<ProductDetailsPage />} />
         <Route path={routePaths.cart} element={<CartPage />} />
