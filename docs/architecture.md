@@ -34,7 +34,7 @@ This repository contains the customer-facing React frontend, built with Vite and
 - **Cart:** cart page, hook, service, Zustand store, and cart types.
 - **Checkout:** customer details, payment and confirmation pages; B2C/B2B forms; independent schemas; checkout store and types. The customer type toggle appears only on customer details. B2C currently captures name, phone, and delivery location. B2B account loading is a placeholder and does not request duplicate registration data; its continue action stays disabled until the registered business profile is connected. Mobile, card, and till payments and B2C receipt/B2B invoice outputs are future integrations.
 - **Orders:** order pages, services, and types.
-- **Website pages:** home, About Us, hubs, jobs, and contacts live under `src/pages`. The homepage includes the reusable Who We Are introduction below its hero. `/about-us` composes six focused sections in order: Who We Are, Core Belief, Problem, Value Creation, Vision & Mission, and Impact; the shared main layout renders the footer immediately afterward. About page imagery is centralized in `pages/about/aboutImages.ts` and imported only from `src/assets/images`.
+- **Website pages:** home, About Us, hubs, jobs, and contacts live under `src/pages`. The homepage preserves its hero and renders the complete six-section About Us content immediately beneath it. `/about-us` renders the same shared composition, with a page-level heading. The About sections are Who We Are, Core Belief, Problem, Value Creation, Vision & Mission, and Impact; the shared main layout renders the footer after the content. About imagery is centralized in `pages/about/aboutImages.ts` and imported only from `src/assets/images`.
 
 ## Current folder structure
 
@@ -60,7 +60,7 @@ frontend/
 │   ├── pages/
 │   │   ├── home/HomePage.tsx
 │   │   ├── about/
-│   │   │   ├── {AboutUsPage,AboutUsSection}.tsx
+│   │   │   ├── {AboutUsPage,AboutUsContent,AboutUsSection}.tsx
 │   │   │   ├── aboutImages.ts
 │   │   │   └── components/{CoreBeliefSection,ProblemSection,ValueCreationSection,VisionMissionSection,ImpactSection}.tsx
 │   │   ├── hubs/{HubsPage,HubDetailsPage}.tsx

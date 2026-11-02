@@ -1,19 +1,12 @@
-import { AboutUsSection } from './AboutUsSection'
-import { CoreBeliefSection } from './components/CoreBeliefSection'
-import { ImpactSection } from './components/ImpactSection'
-import { ProblemSection } from './components/ProblemSection'
-import { ValueCreationSection } from './components/ValueCreationSection'
-import { VisionMissionSection } from './components/VisionMissionSection'
+import { useLayoutEffect } from 'react'
+import { AboutUsContent } from './AboutUsContent'
 
 export function AboutUsPage() {
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
-    <>
-      <AboutUsSection headingLevel="h1" asPage />
-      <CoreBeliefSection />
-      <ProblemSection />
-      <ValueCreationSection />
-      <VisionMissionSection />
-      <ImpactSection />
-    </>
+    <AboutUsContent headingLevel="h1" asPage />
   )
 }

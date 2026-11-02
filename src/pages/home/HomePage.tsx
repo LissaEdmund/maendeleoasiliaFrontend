@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { AboutUsSection } from '../about/AboutUsSection'
+import { AboutUsContent } from '../about/AboutUsContent'
 
 export function HomePage() {
   return (
@@ -14,7 +14,7 @@ export function HomePage() {
         </p>
         <Link className="button" to="/products">Explore products</Link>
       </section>
-      <AboutUsSection />
+      <AboutUsContent headingLevel="h2" />
     </>
   )
 }
