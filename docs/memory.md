@@ -57,3 +57,11 @@
 - Fixed About Us navigation retaining the previous route's scroll offset: opening `/about-us` now resets the viewport to the top so the complete six-section page starts at Section 01.
 - Updated the About Us implementation to match the clarified page structure: the Home hero remains unchanged, followed by all six About sections; `/about-us` renders the same six sections. Both routes use the shared `AboutUsContent` composition, and the architecture/design documentation now describes this behavior.
 - Verification: `npm run build`, `npm run lint`, and `git diff --check` passed. Browser checks confirmed the Home hero remains on `/`, both routes show all six About sections in order, the shared footer follows, and the 390px Home page has no horizontal overflow.
+
+## 2026-11-03 — Product catalog and cart
+
+- Implemented the `/products` design with search, regional-hub selection, category and in-stock filters, sorting, responsive product cards, hover/focus origin details, and a product-detail dialog with traceability and quantity controls. `/products/:slug` reuses the same detail view.
+- Added three screenshot-derived products and mapped their card/detail imagery to the supplied `pdt-*` assets. Their prices, ratings, stock, origins, and descriptions are sample content for design review; the catalog is not connected to a product API and these values are not verified inventory or claims.
+- Implemented client-side cart add/update/remove behavior and local-storage persistence under `maendeleo-cart`; this is not backend cart/order integration.
+- Updated the architecture and design documentation to describe the implementation and its data boundary.
+- Verification: `npm run build`, `npm run lint`, and `git diff --check` passed. Browser smoke checks confirmed the products page renders and all three mapped product images load without horizontal overflow at the observed 600px viewport.

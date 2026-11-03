@@ -30,8 +30,8 @@ This repository contains the customer-facing React frontend, built with Vite and
 
 ## Feature boundaries
 
-- **Catalog:** product and category pages, hooks, API services, and product/category types.
-- **Cart:** cart page, hook, service, Zustand store, and cart types.
+- **Catalog:** product and category pages, reusable product card/detail components, screenshot-derived sample data, hooks, API services, and product/category types. The current `/products` catalog supports search, hub/category/stock filters, sorting, product details, and cart actions; its values are design-review samples and are not connected to a product API.
+- **Cart:** cart page and types plus a Zustand store persisted in browser local storage. Cart behavior is client-side only and is not connected to backend cart/order services.
 - **Checkout:** customer details, payment and confirmation pages; B2C/B2B forms; independent schemas; checkout store and types. The customer type toggle appears only on customer details. B2C currently captures name, phone, and delivery location. B2B account loading is a placeholder and does not request duplicate registration data; its continue action stays disabled until the registered business profile is connected. Mobile, card, and till payments and B2C receipt/B2B invoice outputs are future integrations.
 - **Orders:** order pages, services, and types.
 - **Website pages:** home, About Us, hubs, jobs, and contacts live under `src/pages`. The homepage preserves its hero and renders the complete six-section About Us content immediately beneath it. `/about-us` renders the same shared composition, with a page-level heading. The About sections are Who We Are, Core Belief, Problem, Value Creation, Vision & Mission, and Impact; the shared main layout renders the footer after the content. About imagery is centralized in `pages/about/aboutImages.ts` and imported only from `src/assets/images`.
@@ -67,7 +67,7 @@ frontend/
 │   │   ├── jobs/{JobsPage,JobDetailsPage,JobApplicationPage}.tsx
 │   │   └── contacts/ContactsPage.tsx
 │   ├── features/
-│   │   ├── catalog/{pages,components,services,hooks,types}/
+│   │   ├── catalog/{pages,components,data,services,hooks,types}/
 │   │   ├── cart/{pages,components,store,services,hooks,types}/
 │   │   ├── checkout/
 │   │   │   ├── pages/ components/b2c/ components/b2b/
@@ -100,4 +100,4 @@ Shared component and asset folders are scaffold slots; the reusable controls lis
 
 ## Implementation status
 
-The route/layout structure, main navigation, checkout type toggle, B2C form/schema, B2B account placeholder, checkout client state, and centralized API client are present. Catalog, cart, orders, hubs, jobs, and contacts are architecture placeholders. Location detection/geocoding, business authentication/profile loading, cart/order data, payment processing, receipt/invoice generation, and backend integration remain future work.
+The route/layout structure, main navigation, checkout type toggle, B2C form/schema, B2B account placeholder, checkout client state, and centralized API client are present. The catalog currently uses screenshot-derived sample content and the cart is persisted in browser local storage; neither is connected to backend catalog/cart/order services. Orders, hubs, jobs, and contacts remain architecture placeholders. Location detection/geocoding, business authentication/profile loading, verified product inventory, backend cart/order integration, payment processing, and receipt/invoice generation remain future work.

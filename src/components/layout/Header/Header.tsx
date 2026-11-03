@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/logos/logo.png'
 import { routePaths } from '../../../routes/routePaths'
+import { useCartStore } from '../../../features/cart/store/cartStore'
 import { Navbar } from '../Navbar/Navbar'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const cartCount = useCartStore((state) =>
+    state.items.reduce((total, item) => total + item.quantity, 0),
+  )
 
   useEffect(() => {
     if (!isMenuOpen) return
@@ -42,13 +46,18 @@ export function Header() {
         <span />
       </button>
       <Navbar isOpen={isMenuOpen} onNavigate={() => setIsMenuOpen(false)} />
-      <Link className="cart-link" to={routePaths.cart} aria-label="Shopping cart">
+      <Link
+        className="cart-link"
+        to={routePaths.cart}
+        aria-label={cartCount > 0 ? `Shopping cart, ${cartCount} items` : 'Shopping cart'}
+      >
         <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="9" cy="21" r="1" />
           <circle cx="20" cy="21" r="1" />
           <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6" />
         </svg>
         <span className="cart-label">Cart</span>
+        {cartCount > 0 && <span className="cart-count" aria-hidden="true">{cartCount}</span>}
       </Link>
     </header>
   )
