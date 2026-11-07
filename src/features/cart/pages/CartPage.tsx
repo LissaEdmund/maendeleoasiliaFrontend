@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react'
 import { routePaths } from '../../../routes/routePaths'
 import { useCartStore } from '../store/cartStore'
+import { getAvailableStock } from '../utils/inventory'
 
 const currency = new Intl.NumberFormat('en-TZ', {
   style: 'currency',
@@ -34,6 +35,7 @@ export function CartPage() {
                   <p>{product.category} · {product.pack}</p>
                   <h2>{product.name}</h2>
                   <strong>{currency.format(product.price)}</strong>
+                  <span className="cart-line-stock">{getAvailableStock(product, items)} available after cart quantity</span>
                 </div>
                 <div className="cart-line-actions">
                   <div className="product-quantity-control" aria-label={`Quantity for ${product.name}`}>

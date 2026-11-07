@@ -5,6 +5,7 @@ import type { Product } from '../types/product'
 
 type ProductCardProps = {
   product: Product
+  availableStock: number
   onView: () => void
   onAdd: () => void
 }
@@ -15,7 +16,7 @@ const currency = new Intl.NumberFormat('en-TZ', {
   maximumFractionDigits: 0,
 })
 
-export function ProductCard({ product, onView, onAdd }: ProductCardProps) {
+export function ProductCard({ product, availableStock, onView, onAdd }: ProductCardProps) {
   return (
     <article className="product-card">
       <div className="product-card-image-wrap">
@@ -38,7 +39,7 @@ export function ProductCard({ product, onView, onAdd }: ProductCardProps) {
         <p className="product-card-description">{product.description}</p>
         <div className="product-card-meta">
           <span>Pack: {product.pack}</span>
-          <span>{product.stock} available</span>
+          <span>{availableStock} available</span>
         </div>
       </div>
 
@@ -53,9 +54,9 @@ export function ProductCard({ product, onView, onAdd }: ProductCardProps) {
             {product.rating}
           </span>
         </div>
-        <button className="product-add-button" type="button" onClick={onAdd}>
+        <button className="product-add-button" type="button" onClick={onAdd} disabled={availableStock === 0}>
           <ShoppingBag size={15} aria-hidden="true" />
-          Add to Cart
+          {availableStock === 0 ? 'Out of Stock' : 'Add to Cart'}
         </button>
       </div>
     </article>

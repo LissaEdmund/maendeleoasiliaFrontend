@@ -1,8 +1,10 @@
+import { useEffect, useRef, type ChangeEvent } from 'react'
 import { Factory, MapPin, PackageCheck, ShieldCheck, ShoppingBag, Star, Users, X } from 'lucide-react'
 import type { Product } from '../types/product'
 
 type ProductDetailsProps = {
   product: Product
+  availableStock: number
   quantity: number
   onQuantityChange: (quantity: number) => void
   onAdd: () => void
@@ -17,11 +19,33 @@ const currency = new Intl.NumberFormat('en-TZ', {
 
 export function ProductDetails({
   product,
+  availableStock,
   quantity,
   onQuantityChange,
   onAdd,
   onClose,
 }: ProductDetailsProps) {
+  const quantityInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (quantityInputRef.current) {
+      quantityInputRef.current.value = availableStock > 0 ? String(quantity) : '0'
+    }
+  }, [availableStock, product.slug, quantity])
+
+  function handleQuantityInput(event: ChangeEvent<HTMLInputElement>) {
+    const parsed = Number(event.target.value)
+    if (Number.isSafeInteger(parsed) && parsed >= 1 && parsed <= availableStock) {
+      onQuantityChange(parsed)
+    }
+  }
+
+  function resetQuantityInput() {
+    if (quantityInputRef.current) {
+      quantityInputRef.current.value = availableStock > 0 ? String(quantity) : '0'
+    }
+  }
+
   return (
     <div className="product-detail-layout">
       {onClose && (
@@ -95,20 +119,37 @@ export function ProductDetails({
             >
               −
             </button>
-            <output aria-live="polite">{quantity}</output>
+            <input
+              ref={quantityInputRef}
+              aria-label="Product quantity"
+              type="number"
+              inputMode="numeric"
+              min={availableStock > 0 ? 1 : 0}
+              max={availableStock}
+              step="1"
+              defaultValue={availableStock > 0 ? quantity : 0}
+              disabled={availableStock === 0}
+              onChange={handleQuantityInput}
+              onBlur={resetQuantityInput}
+            />
             <button
               type="button"
-              onClick={() => onQuantityChange(Math.min(product.stock, quantity + 1))}
+              onClick={() => onQuantityChange(Math.min(availableStock, quantity + 1))}
               aria-label="Increase quantity"
-              disabled={quantity >= product.stock}
+              disabled={availableStock === 0 || quantity >= availableStock}
             >
               +
             </button>
           </div>
-          <p>Unit: {product.pack}<br /><strong>{product.stock} in stock</strong></p>
+          <p>Unit: {product.pack}<br /><strong>{availableStock} in stock</strong></p>
         </div>
-        <button className="product-add-button product-detail-add" type="button" onClick={onAdd}>
-          <span><ShoppingBag size={15} aria-hidden="true" /> Add {quantity} to Cart — {currency.format(product.price * quantity)}</span>
+        <button
+          className="product-add-button product-detail-add"
+          type="button"
+          onClick={onAdd}
+          disabled={availableStock === 0 || quantity > availableStock}
+        >
+          <span><ShoppingBag size={15} aria-hidden="true" /> Add {quantity} to Cart {currency.format(product.price * quantity)}</span>
         </button>
       </div>
     </div>

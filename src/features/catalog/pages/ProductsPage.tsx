@@ -5,6 +5,8 @@ import type { Product } from '../types/product'
 import { ProductCard } from '../components/ProductCard'
 import { ProductDetails } from '../components/ProductDetails'
 import { useCartStore } from '../../cart/store/cartStore'
+import { getAvailableStock } from '../../cart/utils/inventory'
+import { playCartBell } from '../../cart/utils/playCartBell'
 import './products.css'
 
 type SortOrder = 'featured' | 'price-low' | 'price-high' | 'rating'
@@ -21,6 +23,7 @@ export function ProductsPage() {
   const [quantity, setQuantity] = useState(1)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const addItem = useCartStore((state) => state.addItem)
+  const cartItems = useCartStore((state) => state.items)
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -39,7 +42,7 @@ export function ProductsPage() {
           .some((value) => value.toLowerCase().includes(normalizedSearch))
       const matchesHub = hub === 'all' || product.hub === hub
       const matchesCategory = category === 'all' || product.category === category
-      const matchesStock = !inStockOnly || product.stock > 0
+      const matchesStock = !inStockOnly || getAvailableStock(product, cartItems) > 0
       return matchesSearch && matchesHub && matchesCategory && matchesStock
     })
 
@@ -47,11 +50,18 @@ export function ProductsPage() {
     if (sortOrder === 'price-high') return filtered.sort((a, b) => b.price - a.price)
     if (sortOrder === 'rating') return filtered.sort((a, b) => b.rating - a.rating)
     return filtered
-  }, [category, hub, inStockOnly, search, sortOrder])
+  }, [cartItems, category, hub, inStockOnly, search, sortOrder])
 
   function addProductToCart(product: Product, amount: number) {
-    addItem(product, amount)
-    setAddedMessage(`${amount} × ${product.name} added to your cart.`)
+    const addedAmount = addItem(product, amount)
+    if (addedAmount === 0) {
+      setAddedMessage(`No additional stock is available for ${product.name}.`)
+      return 0
+    }
+
+    playCartBell()
+    setAddedMessage(`${addedAmount} × ${product.name} added to your cart.`)
+    return addedAmount
   }
 
   function resetFilters() {
@@ -153,9 +163,8 @@ export function ProductsPage() {
         </label>
       </section>
 
-      <div className="catalog-result-row">
-        <p>{visibleProducts.length} {visibleProducts.length === 1 ? 'product' : 'products'}</p>
-        <span className="catalog-demo-note">Sample catalog for design review</span>
+      <div className="catalog-result-row"> 
+        {/* <p>{visibleProducts.length} {visibleProducts.length === 1 ? 'product' : 'products'}</p> */}
       </div>
 
       {visibleProducts.length > 0 ? (
@@ -164,6 +173,7 @@ export function ProductsPage() {
             <ProductCard
               key={product.slug}
               product={product}
+              availableStock={getAvailableStock(product, cartItems)}
               onView={() => {
                 setQuantity(1)
                 setActiveProduct(product)
@@ -196,11 +206,11 @@ export function ProductsPage() {
         {activeProduct && (
           <ProductDetails
             product={activeProduct}
+            availableStock={getAvailableStock(activeProduct, cartItems)}
             quantity={quantity}
             onQuantityChange={setQuantity}
             onAdd={() => {
-              addProductToCart(activeProduct, quantity)
-              setActiveProduct(null)
+              if (addProductToCart(activeProduct, quantity) > 0) setActiveProduct(null)
             }}
             onClose={() => setActiveProduct(null)}
           />

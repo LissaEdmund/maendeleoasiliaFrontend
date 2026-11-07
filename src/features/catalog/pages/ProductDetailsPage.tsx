@@ -4,13 +4,16 @@ import { ArrowLeft } from 'lucide-react'
 import { products } from '../data/products'
 import { ProductDetails } from '../components/ProductDetails'
 import { useCartStore } from '../../cart/store/cartStore'
+import { getAvailableStock } from '../../cart/utils/inventory'
+import { playCartBell } from '../../cart/utils/playCartBell'
 
 export function ProductDetailsPage() {
   const { slug } = useParams()
   const product = products.find((item) => item.slug === slug)
   const [quantity, setQuantity] = useState(1)
-  const [added, setAdded] = useState(false)
+  const [addedMessage, setAddedMessage] = useState('')
   const addItem = useCartStore((state) => state.addItem)
+  const cartItems = useCartStore((state) => state.items)
 
   if (!product) {
     return (
@@ -27,15 +30,21 @@ export function ProductDetailsPage() {
       <Link className="product-back-link" to="/products"><ArrowLeft size={17} /> Back to products</Link>
       <ProductDetails
         product={product}
+        availableStock={getAvailableStock(product, cartItems)}
         quantity={quantity}
         onQuantityChange={setQuantity}
         onAdd={() => {
-          addItem(product, quantity)
-          setAdded(true)
+          const addedAmount = addItem(product, quantity)
+          if (addedAmount > 0) {
+            playCartBell()
+            setAddedMessage(`${addedAmount} × ${product.name} added to your cart.`)
+          } else {
+            setAddedMessage(`No additional stock is available for ${product.name}.`)
+          }
         }}
       />
       <p className="catalog-status" role="status" aria-live="polite">
-        {added ? `${quantity} × ${product.name} added to your cart.` : ''}
+        {addedMessage}
       </p>
     </div>
   )
