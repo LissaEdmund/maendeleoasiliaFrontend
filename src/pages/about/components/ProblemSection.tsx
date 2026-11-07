@@ -47,13 +47,6 @@ export function ProblemSection() {
           ))}
         </div>
 
-        <aside className="about-opportunity">
-          <h3>The Opportunity Is Clear.</h3>
-          <p>
-            Bring processing closer to agricultural production, empower farmers as business
-            partners, and build industries where agricultural value originates.
-          </p>
-        </aside>
       </div>
     </section>
   )

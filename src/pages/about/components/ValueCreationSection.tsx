@@ -29,20 +29,42 @@ export function ValueCreationSection() {
         <header className="about-section-heading">
           <p className="eyebrow">Our model</p>
           <h2 id="about-value-heading">How We Create Value</h2>
-          <p>
-            We connect agricultural production to local manufacturing through a decentralized
-            network of regional processing hubs.
-          </p>
         </header>
 
-        <img
-          className="about-value-image"
-          src={aboutImages.valueCreation.src}
-          alt={aboutImages.valueCreation.alt}
-          loading="lazy"
-          decoding="async"
-        />
+        <div className="about-value-overview">
+          <div className="about-value-copy">
+            <p>
+              At Maendeleo Asilia, we believe that the true economic potential of agriculture lies
+              not only in what the land produces, but also in what we create from it. Our approach
+              is built around bringing agricultural production and manufacturing closer together,
+              ensuring that value is created within the communities where agricultural resources
+              originate.
+            </p>
+            <p>
+              We establish decentralized, region-specific agro-industrial hubs strategically
+              located near agricultural production areas. Through these hubs, we source locally
+              harvested food and cash crops, transform them into high-value finished products, and
+              connect those products to wider markets.
+            </p>
+            <p>
+              Our model brings farmers, manufacturing, and markets into one connected ecosystem.
+              Rather than leaving farmers as suppliers of raw materials, we seek to transform them
+              into empowered partners in a value chain where they are not merely producing wealth
+              for others, but actively participating in creating, capturing, and sharing it because
+              Africa&apos;s agricultural future should not be defined by what it exports, but by what
+              it manufactures.
+            </p>
+          </div>
+          <img
+            className="about-value-image"
+            src={aboutImages.valueCreation.src}
+            alt={aboutImages.valueCreation.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
 
+        <h3 className="about-process-heading">From local harvest to wider markets</h3>
         <ol className="about-stages">
           {stages.map(({ number, title, description, Icon }) => (
             <li className="about-stage" key={number}>

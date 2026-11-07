@@ -6,7 +6,7 @@ const navigationItems = [
   { label: 'About us', to: routePaths.aboutUs },
   { label: 'Products', to: routePaths.products },
   { label: 'Hubs', to: routePaths.hubs },
-  { label: 'Jobs', to: routePaths.jobs },
+  { label: 'Jobs & Farmer Desk', to: routePaths.jobs },
   { label: 'Contacts', to: routePaths.contacts },
 ] as const
 

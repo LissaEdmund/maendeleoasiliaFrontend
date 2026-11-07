@@ -33,7 +33,6 @@ a { text-decoration: none; }
 .about-section-heading > p:not(.eyebrow) { max-width: 820px; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.65; }
 .about-belief { padding: clamp(64px, 8vw, 96px) 24px; background: linear-gradient(120deg, #102d29 0%, #232927 100%); color: #fff; text-align: center; }
 .about-belief-inner { position: relative; width: min(100%, 1020px); margin: 0 auto; }
-.about-belief-inner::before { position: absolute; top: -50px; left: 50%; color: rgb(217 169 0 / 0.18); content: "“"; font-family: Georgia, serif; font-size: clamp(100px, 14vw, 170px); line-height: 1; transform: translateX(-50%); }
 .about-belief-label { position: relative; display: inline-flex; min-height: 30px; align-items: center; margin: 0 0 22px; padding: 5px 14px; border-radius: 999px; background: #d9a900; color: #1a1a1a; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .about-belief h2 { position: relative; margin: 0; color: #fff; font-size: clamp(20px, 2.5vw, 26px); font-weight: 500; line-height: 1.55; }
 .about-problem { background: #f7f8f5; }
@@ -41,12 +40,15 @@ a { text-decoration: none; }
 .about-challenges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .about-challenge-card { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
 .about-challenge-card > svg { color: var(--green-700); }
-.about-challenge-card h3, .about-opportunity h3 { margin: 14px 0 8px; color: var(--green-900); font-size: 20px; font-weight: 600; line-height: 1.3; }
-.about-challenge-card p, .about-opportunity p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
-.about-opportunity { margin-top: 24px; padding: 24px 28px; border-left: 4px solid var(--green-700); border-radius: 8px; background: var(--green-100); }
-.about-opportunity h3 { margin-top: 0; }
+.about-challenge-card h3 { margin: 14px 0 8px; color: var(--green-900); font-size: 20px; font-weight: 600; line-height: 1.3; }
+.about-challenge-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
 .about-value { padding: clamp(48px, 7vw, 88px) clamp(24px, 6vw, 80px); background: var(--white); }
-.about-value-image { max-height: 440px; margin: 0 auto 36px; aspect-ratio: 16 / 7; border-radius: 14px; }
+.about-value-overview { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: clamp(28px, 5vw, 56px); margin: 0 auto 42px; }
+.about-value-copy { display: grid; gap: 16px; }
+.about-value-copy p { margin: 0; color: #596356; font-size: 15px; line-height: 1.8; }
+.about-value-copy p:first-child { color: #384638; font-size: 16px; font-weight: 550; }
+.about-value-image { max-height: 460px; min-height: 360px; aspect-ratio: 4 / 5; border-radius: 14px; }
+.about-process-heading { margin: 0 0 20px; color: var(--green-900); font-size: clamp(20px, 2.4vw, 24px); font-weight: 650; letter-spacing: -.02em; text-align: center; }
 .about-stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
 .about-stage { position: relative; padding: 24px; border-radius: 12px; background: var(--green-100); }
 .about-stage:not(:last-child)::after { position: absolute; top: 44px; right: -17px; z-index: 1; color: var(--green-700); content: "→"; font-size: 24px; font-weight: 600; }
@@ -119,14 +121,16 @@ a { text-decoration: none; }
   .about-intro-heading, .about-section-heading { margin-bottom: 28px; }
   .about-intro-body { grid-template-columns: 1fr; gap: 24px; }
   .about-intro-body > p { font-size: 16px; }
-  .about-intro-image, .about-problem-image, .about-value-image { aspect-ratio: 4 / 3; }
-  .about-problem-image, .about-value-image { margin-bottom: 24px; }
+  .about-intro-image, .about-problem-image { aspect-ratio: 4 / 3; }
+  .about-value-overview { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+  .about-value-image { min-height: 0; max-height: none; aspect-ratio: 4 / 3; }
+  .about-value-copy { gap: 13px; }
+  .about-value-copy p, .about-value-copy p:first-child { font-size: 15px; }
   .about-challenges, .about-value-cards, .about-impact-grid { grid-template-columns: 1fr; gap: 16px; }
   .about-stages { grid-template-columns: 1fr; gap: 14px; }
   .about-stage:not(:last-child)::after { top: auto; right: 50%; bottom: -19px; transform: rotate(90deg); }
   .about-value-card-header { min-height: 88px; }
   .about-belief { padding: 56px 22px; }
-  .about-belief-inner::before { top: -34px; }
   .about-value { padding: 48px 20px; }
 }
 @media (min-width: 701px) and (max-width: 960px) {
@@ -134,6 +138,7 @@ a { text-decoration: none; }
   .about-value { padding-inline: 32px; }
   .about-content { width: 100%; }
   .about-intro-body { gap: 28px; }
+  .about-value-overview { gap: 30px; }
   .about-impact-grid { gap: 20px; }
 }
 @media (max-width: 440px) {

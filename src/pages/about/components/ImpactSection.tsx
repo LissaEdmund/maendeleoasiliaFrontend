@@ -34,7 +34,7 @@ export function ImpactSection() {
       <div className="about-content">
         <header className="about-section-heading">
           <p className="eyebrow">Our impact</p>
-          <h2 id="about-impact-heading">Beyond Processing. Building Communities.</h2>
+          <h2 id="about-impact-heading">Beyond Processing We are Building Communities</h2>
           <p>
             Our ambition extends beyond producing finished goods. We want to create lasting
             economic opportunities throughout agricultural communities.
