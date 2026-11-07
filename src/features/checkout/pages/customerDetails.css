@@ -296,6 +296,46 @@
   width: 100%;
 }
 
+.business-login h2 {
+  margin: 0 0 5px;
+  color: #174e42;
+  font-size: 19px;
+  font-weight: 750;
+}
+
+.business-login-intro {
+  margin: 0 0 18px;
+  color: #68776f;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.business-login .business-id-help {
+  color: #728078;
+}
+
+.business-register-link {
+  margin: 18px 0 0;
+  color: #66756d;
+  font-size: 12px;
+  text-align: center;
+}
+
+.business-register-link a {
+  color: #15805c;
+  font-weight: 700;
+}
+
+.business-register-link a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.business-register-link a:focus-visible {
+  outline: 2px solid #278260;
+  outline-offset: 3px;
+}
+
 @media (max-width: 480px) {
   .customer-checkout-page {
     width: min(100% - 24px, 480px);

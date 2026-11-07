@@ -5,7 +5,7 @@ import { B2CDetailsForm } from '../components/b2c/B2CDetailsForm'
 import { B2BDetailsForm } from '../components/b2b/B2BDetailsForm'
 import { CustomerTypeToggle } from '../components/CustomerTypeToggle'
 import { useCheckoutStore } from '../store/checkoutStore'
-import type { B2CCustomerDetails } from '../types/checkout'
+import type { B2BCustomerDetails, B2CCustomerDetails } from '../types/checkout'
 import './customerDetails.css'
 
 export function CustomerDetailsPage() {
@@ -14,6 +14,11 @@ export function CustomerDetailsPage() {
 
   const continueAsB2C = (details: B2CCustomerDetails) => {
     setCustomer({ type: 'b2c', details })
+    navigate('/checkout/payment')
+  }
+
+  const continueAsB2B = (details: B2BCustomerDetails) => {
+    setCustomer({ type: 'b2b', details })
     navigate('/checkout/payment')
   }
 
@@ -34,7 +39,7 @@ export function CustomerDetailsPage() {
 
         {customerType === 'b2c'
           ? <B2CDetailsForm onSubmit={continueAsB2C} />
-          : <B2BDetailsForm />}
+          : <B2BDetailsForm onSubmit={continueAsB2B} />}
 
         <p className="customer-card-security">
           <LockKeyhole size={17} aria-hidden="true" />
