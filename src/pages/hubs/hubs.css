@@ -49,72 +49,11 @@
   line-height: 1.65;
 }
 
-.hub-region-filters {
-  display: flex;
-  max-width: 100%;
-  align-items: center;
-  gap: 9px;
-  overflow-x: auto;
+.hub-region-filter-bar {
+  max-width: 520px;
   margin: 0 auto 30px;
-  padding: 4px 2px 10px;
-  scrollbar-color: #bdcbb7 transparent;
-  scrollbar-width: thin;
 }
 
-.hub-region-filter {
-  display: inline-flex;
-  min-height: 42px;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: 7px;
-  padding: 0 12px;
-  border: 1px solid #dce4d9;
-  border-radius: 10px;
-  background: var(--white);
-  color: #4a5849;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 650;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
-}
-
-.hub-region-filter svg {
-  color: #c28a00;
-}
-
-.hub-region-filter small {
-  padding: 2px 5px;
-  border-radius: 999px;
-  background: #eef1ed;
-  color: #5d675b;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.hub-region-filter:hover {
-  border-color: #c9d7c3;
-  background: #f7faf4;
-}
-
-.hub-region-filter.is-selected {
-  border-color: #f2a900;
-  background: #ffb000;
-  color: #25210f;
-  box-shadow: 0 3px 8px rgb(191 128 0 / .18);
-}
-
-.hub-region-filter.is-selected svg {
-  color: #29230e;
-}
-
-.hub-region-filter.is-selected small {
-  background: rgb(255 255 255 / .48);
-  color: #342a0e;
-}
-
-.hub-region-filter:focus-visible,
 .hub-shop-link:focus-visible,
 .hub-back-link:focus-visible,
 .hub-empty-state button:focus-visible {
@@ -503,13 +442,6 @@
     font-size: 14px;
   }
 
-  .hub-region-filters {
-    margin-right: -16px;
-    margin-left: -16px;
-    padding-right: 16px;
-    padding-left: 16px;
-  }
-
   .hub-card-content {
     padding: 14px;
   }
@@ -529,7 +461,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hub-region-filter,
   .hub-shop-link {
     transition: none;
   }

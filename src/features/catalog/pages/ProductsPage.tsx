@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { MapPin, Search, SlidersHorizontal } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { products, productCategories, productHubs } from '../data/products'
 import type { Product } from '../types/product'
 import { ProductCard } from '../components/ProductCard'
@@ -7,6 +7,7 @@ import { ProductDetails } from '../components/ProductDetails'
 import { useCartStore } from '../../cart/store/cartStore'
 import { getAvailableStock } from '../../cart/utils/inventory'
 import { playCartBell } from '../../cart/utils/playCartBell'
+import { FilterBar } from '../../../components/shared/FilterBar/FilterBar'
 import './products.css'
 
 type SortOrder = 'featured' | 'price-low' | 'price-high' | 'rating'
@@ -17,7 +18,6 @@ export function ProductsPage() {
   const [category, setCategory] = useState('all')
   const [inStockOnly, setInStockOnly] = useState(false)
   const [sortOrder, setSortOrder] = useState<SortOrder>('featured')
-  const [filtersOpen, setFiltersOpen] = useState(false)
   const [activeProduct, setActiveProduct] = useState<Product | null>(null)
   const [addedMessage, setAddedMessage] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -69,6 +69,12 @@ export function ProductsPage() {
     setInStockOnly(false)
   }
 
+  function updateSortOrder(value: string) {
+    if (value === 'featured' || value === 'price-low' || value === 'price-high' || value === 'rating') {
+      setSortOrder(value)
+    }
+  }
+
   return (
     <div className="catalog-page">
       <header className="catalog-heading">
@@ -77,91 +83,65 @@ export function ProductsPage() {
         <p>Discover locally processed foods and goods from across Tanzania.</p>
       </header>
 
-      <section className="catalog-toolbar" aria-label="Search and filter products">
-        <label className="catalog-search">
-          <Search size={18} aria-hidden="true" />
-          <span className="sr-only">Search products</span>
-          <input
-            type="search"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search oils, rice, sembe, cashews..."
-          />
-        </label>
-
-        <label className="catalog-select catalog-hub-select">
-          <MapPin size={16} aria-hidden="true" />
-          <span className="sr-only">Filter by regional hub</span>
-          <select value={hub} onChange={(event) => setHub(event.target.value)}>
-            <option value="all">All Regional Hubs</option>
-            {productHubs.map((productHub) => (
-              <option key={productHub} value={productHub}>{productHub}</option>
-            ))}
-          </select>
-        </label>
-
-        <div className="catalog-filter-wrap">
-          <button
-            className={`catalog-filter-button${filtersOpen ? ' is-active' : ''}`}
-            type="button"
-            aria-expanded={filtersOpen}
-            aria-controls="catalog-filters"
-            onClick={() => setFiltersOpen((open) => !open)}
-          >
-            <SlidersHorizontal size={17} aria-hidden="true" />
-            <span className="sr-only">Filters</span>
-          </button>
-          {filtersOpen && (
-            <div className="catalog-filter-panel" id="catalog-filters">
-              <fieldset>
-                <legend>Category</legend>
-                <label>
-                  <input
-                    type="radio"
-                    name="product-category"
-                    checked={category === 'all'}
-                    onChange={() => setCategory('all')}
-                  />
-                  All products
-                </label>
-                {productCategories.map((productCategory) => (
-                  <label key={productCategory}>
-                    <input
-                      type="radio"
-                      name="product-category"
-                      checked={category === productCategory}
-                      onChange={() => setCategory(productCategory)}
-                    />
-                    {productCategory}
-                  </label>
-                ))}
-              </fieldset>
-              <label className="catalog-stock-filter">
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(event) => setInStockOnly(event.target.checked)}
-                />
-                In stock only
-              </label>
-              <button className="catalog-reset-button" type="button" onClick={resetFilters}>
-                Clear filters
-              </button>
-            </div>
-          )}
-        </div>
-
-        <label className="catalog-select catalog-sort-select">
-          <span className="sr-only">Sort products</span>
-          <span aria-hidden="true">Sort:</span>
-          <select value={sortOrder} onChange={(event) => setSortOrder(event.target.value as SortOrder)}>
-            <option value="featured">Featured Top</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </label>
-      </section>
+      <FilterBar
+        ariaLabel="Search and filter products"
+        search={{
+          label: 'Search products',
+          value: search,
+          placeholder: 'Search oils, rice, sembe, cashews...',
+          onChange: setSearch,
+        }}
+        selects={[
+          {
+            id: 'regional-hub',
+            label: 'Filter by regional hub',
+            value: hub,
+            icon: <MapPin size={16} aria-hidden="true" />,
+            options: [
+              { label: 'All Regional Hubs', value: 'all' },
+              ...productHubs.map((productHub) => ({ label: productHub, value: productHub })),
+            ],
+            onChange: setHub,
+          },
+          {
+            id: 'product-sort',
+            label: 'Sort products',
+            value: sortOrder,
+            prefix: 'Sort:',
+            options: [
+              { label: 'Featured Top', value: 'featured' },
+              { label: 'Price: Low to High', value: 'price-low' },
+              { label: 'Price: High to Low', value: 'price-high' },
+              { label: 'Top Rated', value: 'rating' },
+            ],
+            onChange: updateSortOrder,
+          },
+        ]}
+        choiceGroups={[
+          {
+            id: 'product-category',
+            label: 'Category',
+            value: category,
+            options: [
+              { label: 'All products', value: 'all' },
+              ...productCategories.map((productCategory) => ({
+                label: productCategory,
+                value: productCategory,
+              })),
+            ],
+            onChange: setCategory,
+          },
+        ]}
+        toggles={[
+          {
+            id: 'in-stock-only',
+            label: 'In stock only',
+            checked: inStockOnly,
+            onChange: setInStockOnly,
+          },
+        ]}
+        onClear={resetFilters}
+      />
 
       <div className="catalog-result-row"> 
         {/* <p>{visibleProducts.length} {visibleProducts.length === 1 ? 'product' : 'products'}</p> */}
